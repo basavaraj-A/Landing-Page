@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBJ Technologies - Automobile Parts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .navbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(90deg, #0f172a, #1e293b);
+            padding: 15px 20px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .logo::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -3px;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.4s ease, left 0.4s ease;
+        }
+        .logo:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .nav-links li {
+            position: relative;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s ease, background 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .nav-links a:hover {
+            background: #64748b;
+        }
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 140px;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
+            overflow: hidden;
+            z-index: 999;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            display: block;
+            padding: 6px 10px;
+            font-size: 13px;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .dropdown-content a:hover {
+            background: #64748b;
+            color: white;
+        }
+        .inquiry-form {
+            max-width: 500px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        .inquiry-form input,
+        .inquiry-form textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .inquiry-form button {
+            padding: 10px 20px;
+            background-color: #1e293b;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .whatsapp-chat {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25d366;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .media-container {
+            width: 100%;
+            max-width: 720px;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .media-slide {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .updates-section {
+            max-width: 1000px;
+            margin-top: 40px;
+        }
+        .update-block {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .update-block img {
+            width: 200px;
+            height: auto;
+            border-radius: 8px;
+        }
+        .update-content h3 {
+            margin-bottom: 10px;
+            color: #1e293b;
+        }
+        .update-content p {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        footer {
+            background: linear-gradient(90deg, #0f172a, #1e293b);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .rights {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .address-popup {
+            display: none;
+            margin-top: 10px;
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .nav-links li {
+                margin: 5px 0;
+            }
+            .update-block {
+                flex-direction: column;
+                text-align: center;
+            }
+            .update-block img {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+    <script>
+        function toggleInquiryForm() {
+            let form = document.getElementById("inquiryForm");
+            form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+        }
+        function goToHome() {
+            window.location.href = "mbjtech.html";
+        }
+        let mediaIndex = 0;
+        const mediaList = [
+            '<img class="media-slide" src="images/CAM.jpg" width="2000" height="405" alt="CAM image">'
+        ];
+        function rotateMedia() {
+            const container = document.getElementById("mediaContainer");
+            container.innerHTML = mediaList[mediaIndex];
+            mediaIndex = (mediaIndex + 1) % mediaList.length;
+        }
+        window.onload = () => {
+            rotateMedia();
+            setInterval(rotateMedia, 3000);
+            const animated = document.querySelectorAll('.update-block');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            animated.forEach(block => observer.observe(block));
+        };
+        function toggleAddress() {
+            const popup = document.getElementById("addressPopup");
+            popup.style.display = (popup.style.display === "none" || popup.style.display === "") ? "block" : "none";
+        }
+    </script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo" onclick="goToHome()">MBJ Technologies</div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="About.html">About</a></li>
+            <li class="dropdown">
+                <a href="#">Services</a>
+                <div class="dropdown-content">
+                    <a href="#">Engraving</a>
+                    <a href="#">Laser Printing</a>
+                </div>
+            </li>
+            <li><a href="Inquiry.html">Inquiry</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div id="mediaContainer" class="media-container"></div>
+        <div class="updates-section">
+            <div class="update-block">
+                <img src="images/CNC machine.jpg" alt="CNC machining">
+                <div class="update-content">
+                    <h3>CNC Machining</h3>
+                    <p>Our Computer Numerical Control (CNC) machining services deliver unparalleled precision and efficiency. Utilizing advanced CNC technology, we produce complex components with tight tolerances, ensuring consistency and high-quality finishes across various materials. This service is ideal for industries requiring intricate parts and rapid production cycles.</p>
+                </div>
+            </div>
+            <div class="update-block">
+                <img src="images/VMC Milling.webp" alt="VMC Milling">
+                <div class="update-content">
+                    <h3>VMC Milling</h3>
+                    <p>At MBJ Technologies, our Vertical Machining Center (VMC) milling capabilities allow for the creation of intricate and precise components. With multi-axis machining, we handle both prototype and high-volume production, delivering parts that meet stringent quality standards and exact specifications.</p>
+                </div>
+            </div>
+            <div class="update-block">
+                <img src="images/Precision Engraving.png" alt="Precision Engraving">
+                <div class="update-content">
+                    <h3>Precision Engraving</h3>
+                    <p>Our engraving services combine traditional craftsmanship with modern technology to produce detailed and durable markings. Whether it's for branding, personalization, or functional purposes, we engrave on a variety of materials, ensuring clarity and longevity of the designs.</p>
+                </div>
+            </div>
+            <div class="update-block">
+                <img src="images/Laser printing machine.jpg" alt="Laser Printing">
+                <div class="update-content">
+                    <h3>Laser Printing</h3>
+                    <p>Leveraging cutting-edge laser technology, our laser printing services provide high-resolution, permanent markings on diverse materials. This non-contact process ensures minimal material distortion, making it perfect for applications requiring fine detail and durability, such as serial numbering, barcoding, and decorative designs.</p>
+                </div>
+            </div>
+        </div>
+        <div id="inquiryForm" class="inquiry-form">
+            <h2>Customer Inquiry Form</h2>
+            <input type="text" placeholder="Your Name">
+            <input type="email" placeholder="Your Email">
+            <input type="text" placeholder="Product/Service Inquiry">
+            <textarea placeholder="Your Message"></textarea>
+            <button type="submit">Submit Inquiry</button>
+        </div>
+    </main>
+    <a href="https://wa.me/yourwhatsapplink" class="whatsapp-chat">Chat on WhatsApp</a>
+    <footer class="footer">
+        <button onclick="toggleAddress()">Address</button>
+        <div id="addressPopup" class="address-popup">
+            Gate No. 169, Talwade Road, Rupee Nagar, behind Saraswati English Medium School, Pune-411062, Maharashtra, India.
+        </div>
+        <div style="margin-top: 10px;">
+            <a href="https://www.facebook.com/YourPage" target="_blank" style="margin: 0 10px; color: white;">Facebook</a>
+            <a href="https://www.instagram.com/YourProfile" target="_blank" style="margin: 0 10px; color: white;">Instagram</a>
+            <a href="https://www.linkedin.com/in/mbj-technologies-238a83360/" target="_blank" style="margin: 0 10px; color: white;">LinkedIn</a>
+        </div>
+
+        <p class="rights">© 2025 MBJ Technologies. All rights reserved.</p>
+    </footer>
+      
+</body>
+</html>
